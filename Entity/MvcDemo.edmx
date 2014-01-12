@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MvcDemoModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MvcDemoModelStoreContainer">
+          <EntitySet Name="School" EntityType="MvcDemoModel.Store.School" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="STUDENT" EntityType="MvcDemoModel.Store.STUDENT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="STUDENT_SUBJECT" EntityType="MvcDemoModel.Store.STUDENT_SUBJECT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SUBJECT" EntityType="MvcDemoModel.Store.SUBJECT" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="t_Users" EntityType="MvcDemoModel.Store.t_Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Student_School" Association="MvcDemoModel.Store.FK_Student_School">
+            <End Role="School" EntitySet="School" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_SUBJECT_Student" Association="MvcDemoModel.Store.FK_STUDENT_SUBJECT_Student">
+            <End Role="STUDENT" EntitySet="STUDENT" />
+            <End Role="STUDENT_SUBJECT" EntitySet="STUDENT_SUBJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_SUBJECT_SUBJECT" Association="MvcDemoModel.Store.FK_STUDENT_SUBJECT_SUBJECT">
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+            <End Role="STUDENT_SUBJECT" EntitySet="STUDENT_SUBJECT" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="WebSite" Type="nvarchar" MaxLength="200" />
+          <Property Name="Manager" Type="nvarchar" MaxLength="50" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Modify" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="SchoolId" Type="nvarchar" MaxLength="50" />
+          <Property Name="JoinDate" Type="date" />
+          <Property Name="GarduationDate" Type="date" />
+          <Property Name="Sex" Type="bit" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Modify" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STUDENT_SUBJECT">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Name="StudentId" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SubjectId" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Score" Type="float" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Modify" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SUBJECT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Score" Type="int" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Modify" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifyDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="t_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Password" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="Sex" Type="int" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Telephone" Type="varchar" MaxLength="15" />
+          <Property Name="Remark" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Student_School">
+          <End Role="School" Type="MvcDemoModel.Store.School" Multiplicity="0..1" />
+          <End Role="STUDENT" Type="MvcDemoModel.Store.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_SUBJECT_Student">
+          <End Role="STUDENT" Type="MvcDemoModel.Store.STUDENT" Multiplicity="1" />
+          <End Role="STUDENT_SUBJECT" Type="MvcDemoModel.Store.STUDENT_SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT_SUBJECT">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_SUBJECT_SUBJECT">
+          <End Role="SUBJECT" Type="MvcDemoModel.Store.SUBJECT" Multiplicity="1" />
+          <End Role="STUDENT_SUBJECT" Type="MvcDemoModel.Store.STUDENT_SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBJECT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT_SUBJECT">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MvcDemoModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MvcDemoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="t_Users" EntityType="MvcDemoModel.t_Users" />
+          <EntitySet Name="School" EntityType="MvcDemoModel.School" />
+          <EntitySet Name="STUDENT" EntityType="MvcDemoModel.STUDENT" />
+          <EntitySet Name="STUDENT_SUBJECT" EntityType="MvcDemoModel.STUDENT_SUBJECT" />
+          <EntitySet Name="SUBJECT" EntityType="MvcDemoModel.SUBJECT" />
+          <AssociationSet Name="FK_Student_School" Association="MvcDemoModel.FK_Student_School">
+            <End Role="School" EntitySet="School" />
+            <End Role="STUDENT" EntitySet="STUDENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_SUBJECT_Student" Association="MvcDemoModel.FK_STUDENT_SUBJECT_Student">
+            <End Role="STUDENT" EntitySet="STUDENT" />
+            <End Role="STUDENT_SUBJECT" EntitySet="STUDENT_SUBJECT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_STUDENT_SUBJECT_SUBJECT" Association="MvcDemoModel.FK_STUDENT_SUBJECT_SUBJECT">
+            <End Role="SUBJECT" EntitySet="SUBJECT" />
+            <End Role="STUDENT_SUBJECT" EntitySet="STUDENT_SUBJECT" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="t_Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Sex" Type="Int32" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Telephone" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="Remark" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WebSite" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Manager" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Creator" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="Modify" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifyDate" Precision="3" />
+          <NavigationProperty Name="STUDENT" Relationship="MvcDemoModel.FK_Student_School" FromRole="School" ToRole="STUDENT" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SchoolId" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="JoinDate" Precision="0" />
+          <Property Type="DateTime" Name="GarduationDate" Precision="0" />
+          <Property Type="Boolean" Name="Sex" />
+          <Property Type="String" Name="Creator" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="Modify" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifyDate" Precision="3" />
+          <NavigationProperty Name="School" Relationship="MvcDemoModel.FK_Student_School" FromRole="STUDENT" ToRole="School" />
+          <NavigationProperty Name="STUDENT_SUBJECT" Relationship="MvcDemoModel.FK_STUDENT_SUBJECT_Student" FromRole="STUDENT" ToRole="STUDENT_SUBJECT" />
+        </EntityType>
+        <EntityType Name="STUDENT_SUBJECT">
+          <Key>
+            <PropertyRef Name="StudentId" />
+            <PropertyRef Name="SubjectId" />
+          </Key>
+          <Property Type="String" Name="StudentId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SubjectId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="Score" />
+          <Property Type="String" Name="Creator" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="Modify" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifyDate" Precision="3" />
+          <NavigationProperty Name="STUDENT" Relationship="MvcDemoModel.FK_STUDENT_SUBJECT_Student" FromRole="STUDENT_SUBJECT" ToRole="STUDENT" />
+          <NavigationProperty Name="SUBJECT" Relationship="MvcDemoModel.FK_STUDENT_SUBJECT_SUBJECT" FromRole="STUDENT_SUBJECT" ToRole="SUBJECT" />
+        </EntityType>
+        <EntityType Name="SUBJECT">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Score" />
+          <Property Type="String" Name="Creator" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreateDate" Precision="3" />
+          <Property Type="String" Name="Modify" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifyDate" Precision="3" />
+          <NavigationProperty Name="STUDENT_SUBJECT" Relationship="MvcDemoModel.FK_STUDENT_SUBJECT_SUBJECT" FromRole="SUBJECT" ToRole="STUDENT_SUBJECT" />
+        </EntityType>
+        <Association Name="FK_Student_School">
+          <End Type="MvcDemoModel.School" Role="School" Multiplicity="0..1" />
+          <End Type="MvcDemoModel.STUDENT" Role="STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT">
+              <PropertyRef Name="SchoolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_SUBJECT_Student">
+          <End Type="MvcDemoModel.STUDENT" Role="STUDENT" Multiplicity="1" />
+          <End Type="MvcDemoModel.STUDENT_SUBJECT" Role="STUDENT_SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STUDENT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT_SUBJECT">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_STUDENT_SUBJECT_SUBJECT">
+          <End Type="MvcDemoModel.SUBJECT" Role="SUBJECT" Multiplicity="1" />
+          <End Type="MvcDemoModel.STUDENT_SUBJECT" Role="STUDENT_SUBJECT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBJECT">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="STUDENT_SUBJECT">
+              <PropertyRef Name="SubjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MvcDemoModelStoreContainer" CdmEntityContainer="MvcDemoEntities">
+    <EntitySetMapping Name="t_Users">
+      <EntityTypeMapping TypeName="IsTypeOf(MvcDemoModel.t_Users)">
+        <MappingFragment StoreEntitySet="t_Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Account" ColumnName="Account" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="School">
+            <EntityTypeMapping TypeName="MvcDemoModel.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Modify" ColumnName="Modify" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Manager" ColumnName="Manager" />
+                <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENT">
+            <EntityTypeMapping TypeName="MvcDemoModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENT">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Modify" ColumnName="Modify" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="GarduationDate" ColumnName="GarduationDate" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENT_SUBJECT">
+            <EntityTypeMapping TypeName="MvcDemoModel.STUDENT_SUBJECT">
+              <MappingFragment StoreEntitySet="STUDENT_SUBJECT">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Modify" ColumnName="Modify" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUBJECT">
+            <EntityTypeMapping TypeName="MvcDemoModel.SUBJECT">
+              <MappingFragment StoreEntitySet="SUBJECT">
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Modify" ColumnName="Modify" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MvcDemo">
+        <EntityTypeShape EntityType="MvcDemoModel.t_Users" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5630916341145831" IsExpanded="true" />
+        <EntityTypeShape EntityType="MvcDemoModel.School" Width="1.5" PointX="11.569621385806064" PointY="25.851174962637561" />
+        <EntityTypeShape EntityType="MvcDemoModel.STUDENT" Width="1.5" PointX="5.3793394069091134" PointY="21.798976506012945" />
+        <EntityTypeShape EntityType="MvcDemoModel.STUDENT_SUBJECT" Width="1.5" PointX="4.6015321857303064" PointY="31.327088787838392" />
+        <EntityTypeShape EntityType="MvcDemoModel.SUBJECT" Width="1.5" PointX="4.75" PointY="11" />
+        <AssociationConnector Association="MvcDemoModel.FK_Student_School" />
+        <AssociationConnector Association="MvcDemoModel.FK_STUDENT_SUBJECT_Student" />
+        <AssociationConnector Association="MvcDemoModel.FK_STUDENT_SUBJECT_SUBJECT" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
