@@ -26,12 +26,12 @@ namespace BLL
 {
     public class StudentBLL : BaseBLL<STUDENT>, IStudentBLL
     {
-        private IStudentDao<STUDENT> studentDao = null;
+        private IStudentEFDao<STUDENT> studentDao = null;
 
         public StudentBLL()
         {
             IApplicationContext context = ContextRegistry.GetContext();
-            studentDao = (IStudentDao<STUDENT>)context.GetObject("StudentEFDao");
+            studentDao = (IStudentEFDao<STUDENT>)context.GetObject("StudentEFDao");
             Dao = studentDao;
         }
         public int GetStudentCount()

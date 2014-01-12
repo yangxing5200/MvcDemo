@@ -15,7 +15,7 @@ namespace IEFDao
     {
 
     }
-    public interface IStudentDao<T>:IBaseEFDao<T> where T : class
+    public interface IStudentEFDao<T>:IBaseEFDao<T> where T : class
     {
         
     }
